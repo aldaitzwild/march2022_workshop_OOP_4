@@ -69,4 +69,43 @@ class Arena
     {
         return $this->size;
     }
+
+    public function move(Fighter $fighter, string $direction): void
+    {
+        $y = $fighter->getY();
+        if($direction == "N") --$y;
+        if($direction == "S") ++$y;
+
+        $x = $fighter->getX();
+        if($direction == "W") --$x;
+        if($direction == "E") ++$x;
+
+        if(
+            $x < 0 || $x >= $this->size ||
+            $y < 0 || $y >= $this->size
+        ) {
+            throw new Exception('Ce déplacement sort du cadre de jeu.');
+        }
+
+        foreach($this->monsters as $monster) {
+            if($monster->getX() == $x && $monster->getY() == $y)
+                throw new Exception('La case est déjà occupée.');
+        }
+
+        $fighter->setY($y);
+        $fighter->setX($x);
+
+    }
+
+    public function battle(int $id): void
+    {
+        if(!$this->touchable($this->hero, $this->monsters[$id]))
+            throw new Exception('Monstre intouchable !');
+
+        $this->hero->fight($this->monsters[$id]);
+
+        if(!$this->monsters[$id]->isAlive()){
+            array_splice($this->monsters, $id, 1);
+        }
+    }
 }
