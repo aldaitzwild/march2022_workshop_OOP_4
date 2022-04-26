@@ -10,6 +10,26 @@ class Hero extends Fighter
     private ?Weapon $weapon = null;
     private ?Shield $shield = null;
 
+    public function __construct(
+        string $name,
+        int $strength = 10,
+        int $dexterity = 5,
+        string $image = 'fighter.svg'
+    ) {
+        parent::__construct($name, $strength, $dexterity, $image);
+        $this->addExperience(1000);
+    }
+
+    public function getStrength(): int
+    {
+        return parent::getStrength() * Level::calculate($this->getExperience());
+    }
+
+    public function getDexterity(): int
+    {
+        return parent::getDexterity() * Level::calculate($this->getExperience());
+    }
+
     public function getDamage(): int
     {
         $damage = $this->getStrength();

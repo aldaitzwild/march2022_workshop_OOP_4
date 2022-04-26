@@ -14,6 +14,7 @@ abstract class Fighter
     private int $x;
     private int $y;
     protected float $range = 1;
+    private int $experience = 0;
 
     public function __construct(
         string $name,
@@ -41,8 +42,6 @@ abstract class Fighter
 
         return $defense;
     }
-
-
 
     /**
      * Get the value of name
@@ -167,5 +166,23 @@ abstract class Fighter
     public function getRange(): float
     {
         return $this->range;
+    }
+
+    /**
+     * Get the value of experience
+     */ 
+    public function getExperience(): int
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Set the value of experience
+     *
+     * @return  self
+     */ 
+    public function addExperience($experience): void
+    {
+        $this->experience += $experience;
     }
 }

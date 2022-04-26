@@ -105,6 +105,7 @@ class Arena
         $this->hero->fight($this->monsters[$id]);
 
         if(!$this->monsters[$id]->isAlive()){
+            $this->hero->addExperience($this->monsters[$id]->getExperience());
             array_splice($this->monsters, $id, 1);
         }
     }
